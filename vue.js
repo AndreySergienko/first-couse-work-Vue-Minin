@@ -6,7 +6,7 @@ const App = {
   data() {
     return {
       activeIndex: 0, // то, что позволяет определить текущий активный шаг
-      finish: false,
+      isFinish: false,
       steps: [
         {title: 'Основы', text: 'В блоке вы познакомитесь со всеми основами Vue.js на практике. На протяжении блока мы напишем реактивное приложение, в процессе разработки которого разберем вся базу фреймворка.'},
         {title: 'Компоненты', text: 'Один из самых важных блоков в курсе, где вы узнаете все о компонентах. В блоке мы напишем 2 разных приложения и создадим более 5 различных UI компонентов как в реальной разработке. Блок расскажет про абсолютно все составляющие, которые есть в компонентах: взаимодействие, slots, асинхронные и динамические компоненты и тонна примеров.'},
@@ -17,33 +17,33 @@ const App = {
     }
   },
   methods: {
-    prevOrReset(event) {
-      if (event.target.innerHTML === 'Назад') {
-        if (this.activeIndex) {
-          this.activeIndex--
-        }
-      } else {
-        this.activeIndex = 0
-        this.finish = false
+    prev() {
+      if (this.activeIndex !== 0) {
+        this.activeIndex--
       }
     },
-    nextOfFinish(event) {
-      if (event.target.innerHTML === 'Закончить') {
-        this.finish = true
+    reset() {
+      this.activeIndex = 0
+      this.isFinish = false
+    },
+    nextOfFinish() {
+      if (this.activeIndex === this.steps.length - 1) {
+        this.isFinish = true
       } else {
         this.activeIndex++
       }
     },
     setActive(idx) {
       this.activeIndex = idx
-      // когда нажимаем на определенный шаг
     }
   },
   computed: {
-    // тут стоит определить несколько свойств:
-    // 1. текущий выбранный шаг
-    // 2. выключена ли кнопка назад
-    // 3. находимся ли мы на последнем шаге
+    isLastStep () {
+      return this.activeIndex === this.steps.length - 1
+    },
+    prevDisabled() {
+      return this.activeIndex === 0
+    }
   }
 }
 

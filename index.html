@@ -25,9 +25,12 @@
             {{step.title}}
           </li>
         </ul>
-        <div>
-          <button class="btn" @click="prevOrReset($event)">{{finish ? 'Начать заново' : 'Назад'}}</button>
-          <button class="btn primary" @click="nextOfFinish($event)" v-if="!finish">{{activeIndex === 4 ? 'Закончить' : 'Вперёд'}}</button>
+        <div v-if="!isFinish">
+          <button class="btn" @click="prevOrReset($event)" :disabled="prevDisabled">Назад</button>
+          <button class="btn primary" @click="nextOfFinish">{{ isLastStep ? 'Закончить' : 'Вперед' }}</button>
+        </div>
+        <div v-else>
+          <button class="btn" @click="reset">Начать заново</button>
         </div>
       </div>
     </div>
